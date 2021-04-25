@@ -16,6 +16,7 @@ public class RotateWithMouse : MonoBehaviour
         {
             lookTarget = hit.point;
         }
+
         transform.LookAt(lookTarget);
     }
 }
