@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject gameManager;
     public Transform targetTransform;
     public float alertRadius;
     public float moveSpeed;
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
         animation = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         randPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        gameManager = GameObject.FindWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -46,10 +48,28 @@ public class Enemy : MonoBehaviour
     {
         if (Vector3.Distance(targetTransform.position, transform.position) <= alertRadius)
         {
+            // Play sound of bunny chasing you (depends on bunny size)
+            SoundManager.Sound walkingSound;
+            SoundManager soundManager = gameManager.GetComponent<SoundManager>();
+            if (transform.localScale.x > 1.1f && transform.localScale.y > 1.1f)
+            {
+                walkingSound = SoundManager.Sound.BunnyWalkingSlow;
+            }
+            else if (transform.localScale.x < 0.7f && transform.localScale.y < 0.7f)
+            {
+                walkingSound = SoundManager.Sound.BunnyWalkingFast;
+            }
+            else
+            {
+                walkingSound = SoundManager.Sound.BunnyWalkingMedium;
+            }
+            soundManager.PlaySoundOneShot3D(walkingSound, transform.position);
+
+            // Move to position
             MoveToPosition(targetTransform.position);
+            
             return true;
         }
-
         return false;
     }
 
