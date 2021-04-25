@@ -14,7 +14,7 @@ public class Flashlight : MonoBehaviour
     public bool isOn = true;
     bool firstPress = true;
     public Battery battery;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +68,12 @@ public class Flashlight : MonoBehaviour
         {
             firstPress = true;
         }
+    }
 
-
+    public void RestoreBattery()
+    {
+        battery.RestoreBattery();
+        charge = maxCharge;
+        threshold = maxCharge - maxCharge / 5;
     }
 }
