@@ -16,14 +16,14 @@ public class SoundManager
     {
         GameObject soundGameObject = new GameObject("Sound");
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.Play(clip);
+        //audioSource.Play(clip);
     }
 
     public void StopSound(Sound sound)
     {
         GameObject soundGameObject = new GameObject("Sound");
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.PlayOneShot(clip);
+        //audioSource.PlayOneShot(clip);
     }
 
 }

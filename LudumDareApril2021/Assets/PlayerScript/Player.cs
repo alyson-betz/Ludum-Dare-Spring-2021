@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Respawn"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             dead = true;
             myRigidbody2D.velocity = Vector2.zero;

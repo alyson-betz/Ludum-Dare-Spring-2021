@@ -63,6 +63,7 @@ public class Enemy : MonoBehaviour
     {
         if (Mathf.Abs(aDirection.x) > Mathf.Abs(aDirection.y))
         {
+            Debug.Log("Horizontal true");
             myHorizontalBoxColl.enabled = true;
             myVerticalBoxColl.enabled = false;
             if (aDirection.x > 0)
@@ -76,6 +77,7 @@ public class Enemy : MonoBehaviour
         }
         else if (Mathf.Abs(aDirection.x) < Mathf.Abs(aDirection.y))
         {
+            Debug.Log("Vertical true");
             myHorizontalBoxColl.enabled = false;
             myVerticalBoxColl.enabled = true;
             if (aDirection.y > 0)
