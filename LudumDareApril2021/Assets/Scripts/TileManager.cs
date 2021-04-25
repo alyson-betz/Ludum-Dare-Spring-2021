@@ -23,7 +23,7 @@ public class TileManager : MonoBehaviour
             return first.x == second.x || first.y == second.y;
         }
 
-        public static bool operator != (TileCoords first, TileCoords second)
+        public static bool operator !=(TileCoords first, TileCoords second)
         {
             return first.x != second.x || first.y != second.y;
         }
@@ -31,6 +31,7 @@ public class TileManager : MonoBehaviour
 
     public GameObject[] tiles;
     public GameObject goalTile;
+    public GameObject startTile;
     public int tileHeight, tileWidth;
     public int mapSizeX, mapSizeY;
 
@@ -38,26 +39,29 @@ public class TileManager : MonoBehaviour
     private TileCoords goalPos;
     private TileCoords[,] tileMap;
     private Transform playerTransform;
-    private float spawnX, spawnY = 0f;
 
-    void Start()
+    void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         tileMap = new TileCoords[mapSizeX, mapSizeY];
         startPos = new TileCoords((int)(mapSizeX / 2), 0);
         goalPos = GetGoalPosition();
 
-        for(int i = 0; i < mapSizeX; i++)
+        for (int i = 0; i < mapSizeX; i++)
         {
-            for(int j = 0; j < mapSizeY; j++)
+            for (int j = 0; j < mapSizeY; j++)
             {
-                if (i != goalPos.x || j != goalPos.y)
+                if ((i != startPos.x || j != startPos.y) && (i != goalPos.x || j != goalPos.y))
                 {
                     tileMap[i, j] = SpawnRandomTile(i, j);
                 }
-                else
+                else if (i == goalPos.x || j == goalPos.y)
                 {
                     tileMap[i, j] = SpawnSpecificTile(i, j, goalTile, goalPos);
+                }
+                else
+                {
+                    tileMap[i, j] = SpawnSpecificTile(i, j, startTile, startPos);
                 }
             }
         }
@@ -65,9 +69,9 @@ public class TileManager : MonoBehaviour
 
     void Update()
     {
-        for(int x = 0; x < mapSizeX; x++)
+        for (int x = 0; x < mapSizeX; x++)
         {
-            for(int y = 0; y < mapSizeY; y++)
+            for (int y = 0; y < mapSizeY; y++)
             {
                 if (tileMap[x, y] != startPos && tileMap[x, y] != goalPos)
                 {
@@ -83,6 +87,23 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Vector2 GetRandomVectorPosition()
+    {
+        int randomX = 0;
+        int randomY = 0;
+        Vector2 positon = Vector2.zero;
+
+        do
+        {
+            randomX = (int)Random.Range(0, mapSizeX);
+            randomY = (int)Random.Range(0, mapSizeY);
+            positon = new Vector2((-mapSizeX / 2 + 0.5f + randomX) * tileWidth, (-mapSizeY / 2 + 0.5f + randomY) * tileHeight);
+        }
+        while (tileMap[randomX, randomY] == startPos || tileMap[randomX, randomY] == goalPos);
+
+        return positon;
     }
 
     public Vector2 GetStartPlayerPosition()
