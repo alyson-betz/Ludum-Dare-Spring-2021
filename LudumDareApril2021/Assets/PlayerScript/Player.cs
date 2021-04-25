@@ -5,6 +5,8 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D myRigidbody2D;
 
+    private Animator myAnimator;
+
     [SerializeField]
     private float playerMovementSpeed;
 
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour
     {
         isFacingRight = true;
         myRigidbody2D = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,6 +32,8 @@ public class Player : MonoBehaviour
     private void HanldlePlayerMovement(float horizontal, float vertical)
     {
         myRigidbody2D.velocity = new Vector2(horizontal * playerMovementSpeed, vertical * playerMovementSpeed);
+        myAnimator.SetFloat("horizontal_speed", Mathf.Abs(horizontal));
+        myAnimator.SetFloat("vertical_speed", vertical);
     }
 
     private void FlipPlayer(float horizontal)
