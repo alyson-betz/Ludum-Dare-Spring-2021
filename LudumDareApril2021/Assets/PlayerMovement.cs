@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("TEST");
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -30,5 +31,14 @@ public class PlayerMovement : MonoBehaviour
     void MoveCharacter()
     {
         myRigidbody.MovePosition(transform.position + change * speed * Time.deltaTime);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("has collided");
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("has collided with enemy");
+        }
     }
 }

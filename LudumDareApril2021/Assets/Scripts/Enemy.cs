@@ -4,35 +4,53 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Transform target;
+    public Transform targetTransform;
     public float alertRadius;
     public float moveSpeed;
+
+    public float randRange;
+    public float timeToRandMove;
+
+    public AudioClip walking;
+
+    public BoxCollider2D myHorizontalBoxColl;
+    public BoxCollider2D myVerticalBoxColl;
 
     private Animator animation;
     private Rigidbody2D myRigidbody;
 
+    private Vector3 randPosition;
+    private float randMoveTimer;
+
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.FindWithTag("Player").transform;
+        targetTransform = GameObject.FindWithTag("Player").transform;
         animation = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
+        randPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckDistance();
+        bool isMoving = CheckDistance();
+
+        if (!isMoving)
+        {
+            MoveToRandomSpot();
+        }
     }
 
-    void CheckDistance()
+    bool CheckDistance()
     {
-        if (Vector3.Distance(target.position, transform.position) <= alertRadius)
+        if (Vector3.Distance(targetTransform.position, transform.position) <= alertRadius)
         {
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
-            changeDirection(newPosition - transform.position);
-            transform.position = newPosition;
+            MoveToPosition(targetTransform.position);
+            return true;
         }
+
+        return false;
     }
 
     private void setAnimationDirection(Vector3 aDirection)
@@ -45,6 +63,8 @@ public class Enemy : MonoBehaviour
     {
         if (Mathf.Abs(aDirection.x) > Mathf.Abs(aDirection.y))
         {
+            myHorizontalBoxColl.enabled = true;
+            myVerticalBoxColl.enabled = false;
             if (aDirection.x > 0)
             {
                 setAnimationDirection(Vector2.right);
@@ -56,6 +76,8 @@ public class Enemy : MonoBehaviour
         }
         else if (Mathf.Abs(aDirection.x) < Mathf.Abs(aDirection.y))
         {
+            myHorizontalBoxColl.enabled = false;
+            myVerticalBoxColl.enabled = true;
             if (aDirection.y > 0)
             {
                 setAnimationDirection(Vector2.up);
@@ -67,4 +89,30 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void MoveToRandomSpot()
+    {
+        randMoveTimer += Time.deltaTime;
+
+        float randX = Random.Range(-randRange, randRange);
+        float randY = Random.Range(-randRange, randRange);
+        float randZ = Random.Range(-randRange, randRange);
+
+        if (randMoveTimer >= timeToRandMove)
+        {
+            Vector3 myPosition = transform.position;
+            randPosition = new Vector3(myPosition.x + randX, myPosition.y + randY, myPosition.z + randZ);
+
+            randMoveTimer = 0;
+            timeToRandMove = Random.Range(0, 10);
+        }
+
+        MoveToPosition(randPosition);
+    }
+
+    private void MoveToPosition(Vector3 newPosition)
+    {
+        Vector3 position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
+        changeDirection(position - transform.position);
+        transform.position = position;
+    }
 }
