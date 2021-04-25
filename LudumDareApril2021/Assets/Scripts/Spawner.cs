@@ -7,23 +7,42 @@ public class Spawner : MonoBehaviour
     public GameObject[] enemies;
     public TileManager tileManager;
 
-    public int enemiesToSpawn;
+    public int minEnemiesToSpawn;
+    public int maxEnemiesToSpawn;
 
-    void Start()
+    public void Reset()
     {
-        for(int i = 0; i < enemiesToSpawn; i++)
+        SpawnEnemies();
+    }
+
+    private void SpawnEnemies()
+    {
+        string holderName = "Generated Enemies";
+        int enemiesToSpawn = (int)Random.Range(minEnemiesToSpawn, maxEnemiesToSpawn);
+
+        if (transform.Find(holderName))
         {
-            SpawnEnemy();
+            DestroyImmediate(transform.Find(holderName).gameObject);
+        }
+
+        Transform enemyHolder = new GameObject (holderName).transform;
+        enemyHolder.parent = transform;
+
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            SpawnEnemy().transform.parent = enemyHolder;
         }
     }
 
-    private void SpawnEnemy()
+    private GameObject SpawnEnemy()
     {
         GameObject enemy;
         int enemyToInstantiate = Random.Range(0, enemies.Length);
 
         enemy = Instantiate(enemies[enemyToInstantiate]) as GameObject;
-        enemy.transform.SetParent(transform);
+        //enemy.transform.SetParent(transform);
         enemy.transform.position = tileManager.GetRandomVectorPosition();
+
+        return enemy;
     }
 }

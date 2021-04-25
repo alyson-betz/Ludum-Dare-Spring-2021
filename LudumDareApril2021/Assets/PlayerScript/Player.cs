@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public MainManager gameManager;
-
     private Rigidbody2D myRigidbody2D;
 
     private Animator myAnimator;
@@ -14,11 +12,12 @@ public class Player : MonoBehaviour
 
     private bool isFacingRight;
     private bool dead = false;
+    private bool hasBaby = false;
+    private bool won = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        ResetPosition();
         isFacingRight = true;
         myRigidbody2D = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
@@ -34,18 +33,24 @@ public class Player : MonoBehaviour
             HanldlePlayerMovement(horizontal, vertical);
             FlipPlayer(horizontal);
         }
-        
-        if(dead && Input.GetKey(KeyCode.Space))
-        {
-            ResetPosition();
-            dead = false;
-        }
-        
     }
 
-    private void ResetPosition()
+    public bool IsDead()
     {
-        transform.position = gameManager.GetStartPos();
+        return dead;
+    }
+
+    public bool HasWon()
+    {
+        return won;
+    }
+
+    public void ResetPlayer(Vector2 startPos)
+    {
+        transform.position = startPos;
+        dead = false;
+        hasBaby = false;
+        won = false;
     }
 
     private void HanldlePlayerMovement(float horizontal, float vertical)
@@ -73,6 +78,15 @@ public class Player : MonoBehaviour
         {
             dead = true;
             myRigidbody2D.velocity = Vector2.zero;
+        }
+        else if (other.gameObject.CompareTag("Baby"))
+        {
+            hasBaby = true;
+            Destroy(other.gameObject);
+        }
+        else if (hasBaby && other.gameObject.CompareTag("Finish"))
+        {
+            won = true;
         }
     }
 }

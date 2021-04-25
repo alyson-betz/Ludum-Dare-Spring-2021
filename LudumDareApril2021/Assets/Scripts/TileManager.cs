@@ -35,6 +35,7 @@ public class TileManager : MonoBehaviour
     public int tileHeight, tileWidth;
     public int mapSizeX, mapSizeY;
 
+    private Transform mapHolder;
     private TileCoords startPos;
     private TileCoords goalPos;
     private TileCoords[,] tileMap;
@@ -43,6 +44,21 @@ public class TileManager : MonoBehaviour
     void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        GenerateMap();
+    }
+
+    public void GenerateMap()
+    {
+        string holderName = "Generated Map";
+
+        if (transform.Find(holderName))
+        {
+            DestroyImmediate(transform.Find(holderName).gameObject);
+        }
+
+        mapHolder = new GameObject(holderName).transform;
+        mapHolder.parent = transform;
+
         tileMap = new TileCoords[mapSizeX, mapSizeY];
         startPos = new TileCoords((int)(mapSizeX / 2), 0);
         goalPos = GetGoalPosition();
@@ -67,7 +83,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void RegenerateVisited()
     {
         for (int x = 0; x < mapSizeX; x++)
         {
@@ -148,7 +164,7 @@ public class TileManager : MonoBehaviour
         GameObject gameObject;
 
         gameObject = Instantiate(tileToInstantiate) as GameObject;
-        gameObject.transform.SetParent(transform);
+        gameObject.transform.parent = mapHolder;
         gameObject.transform.position = new Vector2((-mapSizeX/2 + 0.5f + indexX) * tileWidth, (-mapSizeY/2 + 0.5f + indexY) * tileHeight);
         coord.tile = gameObject;
 
