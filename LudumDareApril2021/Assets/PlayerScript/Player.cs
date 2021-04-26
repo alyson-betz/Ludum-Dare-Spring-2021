@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
         dead = false;
         hasBaby = false;
         won = false;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        HanldlePlayerMovement(horizontal, vertical);
+        FlipPlayer(horizontal);
     }
 
     private void HanldlePlayerMovement(float horizontal, float vertical)
@@ -67,14 +71,13 @@ public class Player : MonoBehaviour
 
     private void FlipPlayer(float horizontal)
     {
-        if (horizontal > 0 && !isFacingRight || horizontal < 0 && isFacingRight)
+        if(horizontal >0 && !isFacingRight || horizontal<0 && isFacingRight)
         {
             isFacingRight = !isFacingRight;
             Vector3 playerScale = transform.localScale;
             playerScale.x *= -1;
             transform.localScale = playerScale;
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
