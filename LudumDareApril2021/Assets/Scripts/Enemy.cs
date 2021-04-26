@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
     public GameObject gameManager;
     public Transform targetTransform;
     public float alertRadius;

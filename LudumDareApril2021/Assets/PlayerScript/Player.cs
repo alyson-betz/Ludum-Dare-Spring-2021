@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     private float playerMovementSpeed;
 
     private bool isFacingRight;
+    private bool dead = false;
+    private bool hasBaby = false;
+    private bool won = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,36 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!dead)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            HanldlePlayerMovement(horizontal, vertical);
+            FlipPlayer(horizontal);
+        }
+    }
+
+    public bool IsDead()
+    {
+        return dead;
+    }
+
+    public bool HasBaby()
+    {
+        return hasBaby;
+    }
+
+    public bool HasWon()
+    {
+        return won;
+    }
+
+    public void ResetPlayer(Vector2 startPos)
+    {
+        transform.position = startPos;
+        dead = false;
+        hasBaby = false;
+        won = false;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         HanldlePlayerMovement(horizontal, vertical);
@@ -45,6 +78,23 @@ public class Player : MonoBehaviour
             playerScale.x *= -1;
             transform.localScale = playerScale;
         }
-        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            dead = true;
+            myRigidbody2D.velocity = Vector2.zero;
+        }
+        else if (other.gameObject.CompareTag("Baby"))
+        {
+            hasBaby = true;
+            Destroy(other.gameObject);
+        }
+        else if (hasBaby && other.gameObject.CompareTag("Finish"))
+        {
+            won = true;
+        }
     }
 }
