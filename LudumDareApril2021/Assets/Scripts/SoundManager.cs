@@ -20,11 +20,16 @@ public class SoundManager : MonoBehaviour
     private List<GameObject> soundGameObjects;
     private List<GameObject> musicGameObjects;
 
+    private Dictionary<uint, GameObject> assignedSoundDictionary;
+    private uint assignedSoundId;
+
     public void Start()
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
         soundGameObjects = new List<GameObject>();
         musicGameObjects = new List<GameObject>();
+        assignedSoundDictionary = new Dictionary<uint, GameObject>();
+        assignedSoundId = 0;
 
         //Bunny walking
         soundTimerDictionary[Sound.BunnyWalkingMedium] = 0f;
@@ -41,7 +46,7 @@ public class SoundManager : MonoBehaviour
     {
         if (CanPlaySound(sound))
         {
-            GameObject soundGameObject = new GameObject("Sound");
+            GameObject soundGameObject = new GameObject("OneShotSound");
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
             audioSource.PlayOneShot(soundAudioClipArray[(int)sound].audioClip);
 
@@ -54,14 +59,9 @@ public class SoundManager : MonoBehaviour
     {
         if (CanPlaySound(sound))
         {
-            GameObject soundGameObject = new GameObject("Sound");
+            GameObject soundGameObject = new GameObject("OneShotSound3D");
             soundGameObject.transform.position = position;
-            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-            audioSource.clip = soundAudioClipArray[(int)sound].audioClip;
-            audioSource.maxDistance = 100f;
-            audioSource.spatialBlend = 1f;
-            audioSource.rolloffMode = AudioRolloffMode.Linear;
-            audioSource.dopplerLevel = 0f;
+            AudioSource audioSource = CreateAudioSource(soundGameObject, soundAudioClipArray[(int)sound].audioClip, 100f, 1f, 1f, true);
             audioSource.Play();
 
             //Add to list
@@ -69,13 +69,39 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Next two functions are used for continuous sounds (returns an id which you can reference to stop the sound)
+
+    public uint PlaySoundAssigned(Sound sound, Vector3 position)
+    {
+        GameObject assignedSoundGO = new GameObject("ContinuousSound");
+        assignedSoundGO.transform.position = position;
+        AudioSource audioSource = CreateAudioSource(assignedSoundGO, soundAudioClipArray[(int)sound].audioClip, 100f, 1f, 1f, true);
+        audioSource.Play();
+
+        //Add to assignedSound list
+        assignedSoundDictionary.Add(assignedSoundId++, assignedSoundGO);
+
+        return assignedSoundId;
+    }
+
+    public bool StopSoundAssigned(uint soundID)
+    {
+        GameObject assignedSoundGO = null;
+        bool soundFound = assignedSoundDictionary.TryGetValue(soundID, out assignedSoundGO);
+
+        if (soundFound)
+        {
+            assignedSoundGO.GetComponent<AudioSource>().Stop();
+            assignedSoundDictionary.Remove(soundID);
+        }
+
+        return soundFound;
+    }
+
     public void PlayMusic(Sound sound, float volume)
     {
-        GameObject musicGameObject = new GameObject("Sound");
-        AudioSource audioSource = musicGameObject.AddComponent<AudioSource>();
-        audioSource.loop = true;
-        audioSource.clip = soundAudioClipArray[(int)sound].audioClip;
-        audioSource.volume = volume;
+        GameObject musicGameObject = new GameObject("Music");
+        AudioSource audioSource = CreateAudioSource(musicGameObject, soundAudioClipArray[(int)sound].audioClip, 100000f, 0f, volume, true);
         audioSource.Play();
 
         //Add to list
@@ -102,6 +128,14 @@ public class SoundManager : MonoBehaviour
             Destroy(soundGameObject);
         }
         soundGameObjects.Clear();
+
+        foreach (KeyValuePair<uint, GameObject> keyPair in assignedSoundDictionary)
+        {
+            keyPair.Value.GetComponent<AudioSource>().Stop();
+            Destroy(keyPair.Value);
+        }
+        assignedSoundDictionary.Clear();
+        assignedSoundId = 0;
     }
 
     public void Update()
@@ -188,16 +222,24 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private AudioSource CreateAudioSource(GameObject GameObject, AudioClip clip, float maxDistance, float spatialBlend, float volume, bool loop)
+    {
+        AudioSource audioSource = GameObject.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.maxDistance = maxDistance;
+        audioSource.volume = volume;
+        audioSource.spatialBlend = spatialBlend;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
+        audioSource.dopplerLevel = 0f;
+        audioSource.loop = loop;
+        return audioSource;
+    }
+
+
     [System.Serializable]
     public class SoundAudioClip
     {
         public SoundManager.Sound sound;
         public AudioClip audioClip;
     }
-
-    bool True()
-    {
-        return true;
-    }
-
 }

@@ -12,8 +12,6 @@ public class Enemy : MonoBehaviour
     public float randRange;
     public float timeToRandMove;
 
-    public AudioClip walking;
-
     public BoxCollider2D myHorizontalBoxColl;
     public BoxCollider2D myVerticalBoxColl;
 
