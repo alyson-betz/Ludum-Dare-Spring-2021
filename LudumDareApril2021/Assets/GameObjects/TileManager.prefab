@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1656490486628819104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1656490486628819106}
+  - component: {fileID: 1656490486628819105}
+  m_Layer: 0
+  m_Name: TileManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1656490486628819106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656490486628819104}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1656490486628819105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656490486628819104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fe471daedbe406e939b9c6d6a1ee5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 4529943791397873251, guid: 046a474c76ae80c4eb9a641d2d98cbca, type: 3}
+  - {fileID: 1181962014862350488, guid: ef47bb00aa34c1c4ca86967559fc4571, type: 3}
+  - {fileID: 6252030127979120809, guid: 2bb0d4685b57f441cb3ed26b28c06610, type: 3}
+  - {fileID: 4361877090413169785, guid: c828a89a041313840ad93fd1586bdf30, type: 3}
+  - {fileID: 1743310381742040985, guid: 3b587609e284fc743847c032ff5ef743, type: 3}
+  - {fileID: 8632412046284951313, guid: 515567631326f7845a5184595b5da8f8, type: 3}
+  - {fileID: 8316466204036295303, guid: ce90f5af096eed14481ff833d6e52444, type: 3}
+  - {fileID: 3202476079699331651, guid: fcf12575ae0fed145a47094f87645693, type: 3}
+  - {fileID: 4529943791397873251, guid: 4e668896086264040b50b963e14af872, type: 3}
+  - {fileID: 4529943791397873251, guid: 8b3aab175cf8142cf99e02a98794e794, type: 3}
+  goalTile: {fileID: 1872042133730986388, guid: a301b84f79a0646ddaf47bf4b48b833d, type: 3}
+  startTile: {fileID: 8231833328073687524, guid: d99692e97c59c4786ab70fdf8ccd56c2, type: 3}
+  tileHeight: 20
+  tileWidth: 20
+  mapSizeX: 10
+  mapSizeY: 10
