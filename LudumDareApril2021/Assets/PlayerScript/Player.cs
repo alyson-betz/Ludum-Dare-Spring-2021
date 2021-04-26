@@ -40,6 +40,11 @@ public class Player : MonoBehaviour
         return dead;
     }
 
+    public bool HasBaby()
+    {
+        return hasBaby;
+    }
+
     public bool HasWon()
     {
         return won;

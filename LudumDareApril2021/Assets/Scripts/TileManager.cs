@@ -71,7 +71,7 @@ public class TileManager : MonoBehaviour
                 {
                     tileMap[i, j] = SpawnRandomTile(i, j);
                 }
-                else if (i == goalPos.x || j == goalPos.y)
+                else if (i == goalPos.x && j == goalPos.y)
                 {
                     tileMap[i, j] = SpawnSpecificTile(i, j, goalTile, goalPos);
                 }
