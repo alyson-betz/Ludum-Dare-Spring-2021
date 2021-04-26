@@ -5,14 +5,13 @@ using UnityEngine;
 public class Campfire : MonoBehaviour
 {
     public GameObject Player;
-    public Flashlight FlashLight; // We need to assign the Flashlight gameobject
     public float TriggerDistance;
 
     private bool IsNearby;
     // Start is called before the first frame update
     void Start()
     {
-
+        Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -24,8 +23,9 @@ public class Campfire : MonoBehaviour
         {
             // Debug.Log("FlashLight function handle in-range");
             // Call the FlashLight function here.
-            FlashLight.RestoreBattery();
-            return;
+            Flashlight fl= GameObject.FindGameObjectWithTag("FlashLight").GetComponent<Flashlight>();
+            fl.RestoreBattery();
+            // return;
         }
     }
 }
