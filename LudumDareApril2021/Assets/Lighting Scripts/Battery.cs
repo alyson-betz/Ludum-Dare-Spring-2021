@@ -53,7 +53,4 @@ public class Battery : MonoBehaviour
         GetComponent<Image>().sprite = FIVE_BARS;
         return currentBars;
     }
-
-
-
 }
