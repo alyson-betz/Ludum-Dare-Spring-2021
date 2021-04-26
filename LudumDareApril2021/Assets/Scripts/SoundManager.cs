@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
         Crows,
         Crickets,
         Wind,
+        BackgroundMusic
     }
 
     public SoundAudioClip[] soundAudioClipArray;
@@ -40,6 +41,8 @@ public class SoundManager : MonoBehaviour
         PlayMusic(Sound.Crows, 0.3f);
         PlayMusic(Sound.Crickets, 0.2f);
         PlayMusic(Sound.Wind, 0.1f);
+
+        PlayMusic(Sound.BackgroundMusic, 0.3f);
     }
 
     public void PlaySoundOneShot(Sound sound)
