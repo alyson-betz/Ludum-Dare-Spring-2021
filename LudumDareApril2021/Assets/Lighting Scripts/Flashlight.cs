@@ -15,11 +15,14 @@ public class Flashlight : MonoBehaviour
     bool firstPress = true;
     public Battery battery;
 
+    public GameObject spriteMask;
+
     // Start is called before the first frame update
     void Start()
     {
         charge = maxCharge;
         threshold = maxCharge - maxCharge / 5;
+        spriteMask.SetActive(true);
     }
 
     // Update is called once per frame
@@ -71,6 +74,8 @@ public class Flashlight : MonoBehaviour
         {
             firstPress = true;
         }
+
+        spriteMask.SetActive(isOn);
     }
 
     public void RestoreBattery()

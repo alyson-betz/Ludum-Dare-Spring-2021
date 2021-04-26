@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6950095056871421244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8418502488736257792}
@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.6698113, g: 0.3097753, b: 0.08530616, a: 1}
-  m_Intensity: 1
+  m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -233,7 +233,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 5163767887048052773, guid: 6351a4356d1394c7d9f1f0e20b17391c, type: 3}
-  FlashLight: {fileID: 3392573833800537703, guid: 8e52f5f04d9694e5f83884cef42ba373, type: 3}
   TriggerDistance: 10
 --- !u!114 &9167902604357054516
 MonoBehaviour:
@@ -248,8 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightObject: {fileID: 6950095056871421244}
-  maxReduction: 0.2
-  maxIncrease: 0.2
+  maxReduction: 3
+  maxIncrease: 3
   rateDamping: 0.1
-  strength: 5
+  strength: 10
   stopFlickering: 0
