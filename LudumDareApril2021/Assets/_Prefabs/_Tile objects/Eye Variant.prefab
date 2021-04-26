@@ -61,7 +61,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1368608711710631270, guid: becb1a51dfafed64795d7e489fcdb983, type: 3}
       propertyPath: m_Name
-      value: Eye
+      value: Eye Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055725648692594558, guid: becb1a51dfafed64795d7e489fcdb983, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: becb1a51dfafed64795d7e489fcdb983, type: 3}

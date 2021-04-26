@@ -73,9 +73,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1212925915
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -7706893394457466700, guid: a146850e0ecfbce4b84da18d859b680d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -165,12 +165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc28aab42be4c684d919c0772b289958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   targetTransform: {fileID: 0}
   alertRadius: 4
   moveSpeed: 1.5
   randRange: 1.5
   timeToRandMove: 5
-  walking: {fileID: 0}
   myHorizontalBoxColl: {fileID: 3585973698699345071}
   myVerticalBoxColl: {fileID: 3585973698699345066}
 --- !u!61 &3585973698699345066
