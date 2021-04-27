@@ -373,12 +373,12 @@ MonoBehaviour:
     1. Find your baby
 
     2. Get out the way you came
-    in
+    in (yellow box)
 
     3. Avoid the bunnies
 
-    4. Campfires and Batteries restore your flashlight
-    battery'
+    4. Campfires and Batteries restore
+    your flashlight battery'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 514d1a71b572d4ca8817d3dba8704333, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 514d1a71b572d4ca8817d3dba8704333, type: 2}
