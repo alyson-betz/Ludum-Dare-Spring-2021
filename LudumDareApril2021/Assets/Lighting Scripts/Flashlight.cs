@@ -15,16 +15,22 @@ public class Flashlight : MonoBehaviour
     bool firstPress = true;
     public Battery battery;
 
+    public GameObject spriteMask;
+
     // Start is called before the first frame update
     void Start()
     {
         charge = maxCharge;
         threshold = maxCharge - maxCharge / 5;
+        spriteMask.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // For debugging only
+        // charge = maxCharge;
+        // threshold = maxCharge - maxCharge / 5;
 
         if (Input.GetButtonDown("Flashlight") && firstPress)
         {
@@ -44,12 +50,12 @@ public class Flashlight : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            battery.RestoreBattery();
-            charge = maxCharge;
-            threshold = maxCharge - maxCharge / 5;
-        }
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+        //     battery.RestoreBattery();
+        //     charge = maxCharge;
+        //     threshold = maxCharge - maxCharge / 5;
+        // }
 
         if (isOn && charge > 0)
         {
@@ -68,6 +74,8 @@ public class Flashlight : MonoBehaviour
         {
             firstPress = true;
         }
+
+        spriteMask.SetActive(isOn);
     }
 
     public void RestoreBattery()

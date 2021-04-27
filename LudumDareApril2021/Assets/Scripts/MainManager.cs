@@ -12,6 +12,7 @@ public class MainManager : MonoBehaviour
     }
 
     public Player player;
+    public Flashlight flashLight;
     public TileManager tileManager;
     public Spawner spawner;
     public GameObject WinScreen;
@@ -60,6 +61,7 @@ public class MainManager : MonoBehaviour
         tileManager.GenerateMap();
         spawner.Reset();
         player.ResetPlayer(GetStartPos());
+        flashLight.RestoreBattery();
         StartTimer();
     }
 
